@@ -1,5 +1,5 @@
 /*
- * Implementation of a two way messaging client in Java
+ * Implementation of a group chat client in Java
  */
 
 // Package for socket related stuff
@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.*;
 
 /*
- * This class does all of two way messaging client's job
+ * This class does all of group chat client's job
  * It simultaneously watches both keyboard and socket for input
  *
  * It consists of 2 threads: parent thread (code inside main method)

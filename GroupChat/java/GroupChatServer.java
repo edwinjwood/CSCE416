@@ -1,5 +1,5 @@
 /*
- * Implementation of a two way messaging server in Java
+ * Implementation of a group chat server in Java
  */
 
 // I/O related package
@@ -8,7 +8,7 @@ import java.net.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /*
- * This class does all of two way messaging server's job
+ * This class does all of group chat server's job
  * It simultaneously watches both keyboard and socket for input
  *
  * It consists of 2 threads: parent thread (code inside init method)
