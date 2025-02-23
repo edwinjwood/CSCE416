@@ -130,7 +130,7 @@ public class GroupChatClient implements Runnable
                 }
 
                 // Write the line to the user
-                System.out.println("Server: " + line);
+                System.out.println(line);
             }
         }
         catch(Exception e) {
