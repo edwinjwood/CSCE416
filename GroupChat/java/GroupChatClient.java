@@ -74,17 +74,20 @@ public class GroupChatClient implements Runnable
     public static void main(String args[])
     {
         // Client needs server's contact information and user name
-        if (args.length != 2) {
-            System.out.println("usage: java GroupChatClient <host> <port>");
+        if (args.length != 3) {
+            System.out.println("usage: java GroupChatClient <host> <port> <name>");
             System.exit(1);
         }
+
+        String host = args[0];
+        int port = Integer.parseInt(args[1]);
+        String name = args[2];
 
         // Connect to the server at the given host and port
         Socket sock = null;
         try {
-            sock = new Socket(args[0], Integer.parseInt(args[1]));
-            System.out.println(
-                    "Connected to server at " + args[0] + ":" + args[1]);
+            sock = new Socket(host, port);
+            System.out.println("Connected to server at " + host + ":" + port);
         }
         catch(Exception e) {
             System.out.println(e);
@@ -94,16 +97,16 @@ public class GroupChatClient implements Runnable
         // Set up a thread to read from user and write to socket
         try {
             // Prepare to write to socket with auto flush on
-            PrintWriter toSockWriter =
-                    new PrintWriter(sock.getOutputStream(), true);
+            PrintWriter toSockWriter = new PrintWriter(sock.getOutputStream(), true);
+
+            // Send the client's name to the server
+            toSockWriter.println(name);
 
             // Prepare to read from keyboard
-            BufferedReader fromUserReader = new BufferedReader(
-                    new InputStreamReader(System.in));
+            BufferedReader fromUserReader = new BufferedReader(new InputStreamReader(System.in));
 
             // Spawn a thread to read from user and write to socket
-            Thread child = new Thread(
-                    new GroupChatClient(fromUserReader, toSockWriter));
+            Thread child = new Thread(new GroupChatClient(fromUserReader, toSockWriter));
             child.start();
         }
         catch(Exception e) {
@@ -114,8 +117,7 @@ public class GroupChatClient implements Runnable
         // Now read from socket and display to user
         try {
             // Prepare to read from socket
-            BufferedReader fromSockReader = new BufferedReader(
-                    new InputStreamReader(sock.getInputStream()));
+            BufferedReader fromSockReader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
             // Keep doing till server is done
             while (true) {
